@@ -1,0 +1,36 @@
+# https://docs.opsdroid.dev/en/stable/configuration.html#logging
+logging:
+  level: info
+# Opsdroid can use environment variable in the config file (https://docs.opsdroid.dev/en/v0.18.0/configuration.html#environment-variables)
+# This can be useful for secrets to avoid having them in git
+connectors:
+  matrix:
+    # Required
+    homeserver: $MATRIX_SERVER
+    mxid: $MATRIX_MXID
+    password: $MATRIX_PASSWORD
+    # access_token: $MATRIX_TOKEN
+    enable_encryption: True
+    store_path: $STORE_PATH
+    device_name: "opsdroid"
+    # A dictionary of multiple rooms
+    # One of these should be named 'main'
+    rooms:
+      main:
+        alias: $MATRIX_ROOM_MAIN
+        # Send messages as msgType: m.notice
+        send_m_notice: False
+      debug:
+        alias: $MATRIX_ROOM_DEBUG
+        send_m_notice: False
+    # nick: "Elektronenhirn"  # The nick will be set on startup
+    #room_specific_nicks: False  # Look up room specific nicknames of senders (expensive in large rooms)
+
+skills:
+  tops:
+    path: /skills/tops
+
+web:
+  webhook-token: $WEBHOOK_TOKEN
+
+
