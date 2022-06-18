@@ -1,10 +1,10 @@
-from opsdroid.matchers import match_regex, match_webhook
-from opsdroid.skill import Skill
-from opsdroid.events import Message
+import logging
 
 from aiohttp.web import BaseRequest
+from opsdroid.events import Message
+from opsdroid.matchers import match_crontab, match_webhook
+from opsdroid.skill import Skill
 
-import logging
 _LOGGER = logging.getLogger(__name__)
 
 

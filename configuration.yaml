@@ -3,6 +3,10 @@ logging:
   level: info
 # Opsdroid can use environment variable in the config file (https://docs.opsdroid.dev/en/v0.18.0/configuration.html#environment-variables)
 # This can be useful for secrets to avoid having them in git
+
+## Show welcome message
+welcome-message: false
+
 connectors:
   matrix:
     # Required
@@ -32,5 +36,9 @@ skills:
 
 web:
   webhook-token: $WEBHOOK_TOKEN
+
+databases:
+  sqlite:
+    path: $DB_PATH
 
 

@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# I used https://github.com/team23/b5/blob/master/build/Taskfile and the b5 documentation as the template for this file
+
+pkg:poetry() {
+    (
+        cd .. &&
+        poetry "$@"
+    )
+}
+
+task:poetry() {
+    pkg:poetry "$@"
+}
+
+task:install() {
+    pkg:poetry install
+}
+
+task:update() {
+    pkg:poetry install
+}
+
+task:shell() {
+    (
+        source "$( pkg:poetry env info -p )/bin/activate"
+        echo -e "${B5_FONT_GREEN}Starting ${SHELL:-/bin/zsh} in a new virtualenv environment, happy developing${B5_FONT_RESTORE}"
+        ${SHELL:-/bin/zsh} "$@"
+    )
+}
+
+task:lint() {
+    pkg:poetry run flake8 __init__.py
+}
+
+task:test() {
+    pkg:poetry run pytest
+}
+
+task:isort() {
+    pkg:poetry run isort __init__.py
+}
+
+task:runpodman() {
+  (
+  cd .. &&
+  podman run -ti --rm -p 8080:8080 --env-file secrets.env -v elektronenhirn-data:/srv/opsdroid-matrix-store elektronenhirn:latest
+  )
+}
+
+task:builddocker() {
+    (
+        cd .. &&
+        docker build -t elektronenhirn:latest .
+    )
+}
+
+task:buildpodman() {
+    (
+        cd .. &&
+        podman build -t elektronenhirn:latest .
+    )
+}
+
+task:deploy() {
+    (
+        cd .. &&
+        npx caprover deploy
+    )
+}
+
+task:autodeploy() {
+    (
+        cd .. &&
+        npx caprover deploy -d
+    )
+}
