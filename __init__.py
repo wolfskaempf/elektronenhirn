@@ -1,3 +1,4 @@
+import base64
 import logging
 
 from aiohttp.web import BaseRequest
@@ -18,3 +19,11 @@ class Tops(Skill):
     async def top_create(self, event: BaseRequest):
         data = await event.json()
         await self.opsdroid.send(Message(str(data['message'])))
+
+    # matches every Tuesday at 16:30
+    @match_crontab('30 16 * * 2', timezone="Europe/Berlin")
+    async def info_send(self, event):
+        reminder_message_base64 = self.opsdroid.config['skills']['tops']['reminder-message']
+        reminder_message = base64.b64decode(reminder_message_base64.encode()).decode()
+
+        await self.opsdroid.send(Message(text=reminder_message))

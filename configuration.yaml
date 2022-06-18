@@ -33,6 +33,7 @@ connectors:
 skills:
   tops:
     path: /skills/tops
+    reminder-message: $REMINDER_MESSAGE
 
 web:
   webhook-token: $WEBHOOK_TOKEN
