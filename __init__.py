@@ -20,8 +20,8 @@ class Tops(Skill):
         data = await event.json()
         await self.opsdroid.send(Message(str(data['message'])))
 
-    # matches every Tuesday at 16:30
-    @match_crontab('30 16 * * 2', timezone="Europe/Berlin")
+    # matches every Tuesday at 15:00
+    @match_crontab('00 15 * * 2', timezone="Europe/Berlin")
     async def info_send(self, event):
         reminder_message_base64 = self.opsdroid.config['skills']['tops']['reminder-message']
         reminder_message = base64.b64decode(reminder_message_base64.encode()).decode()
